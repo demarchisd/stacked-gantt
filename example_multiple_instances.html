@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>StackedGantt Example</title>
+  </head>
+  <body>
+    <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        font-family: Roboto, Times
+      }
+
+      h1 {
+        display: inline-block;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="stacked-gantt.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="stacked-gantt.js"></script>
+  	<script>
+
+    function createDate(time, daysToSum)
+    {
+      var split = time.split(':');
+      var ret = new Date();
+      ret.setHours(split[0]);
+      ret.setMinutes(split[1]);
+
+      if(daysToSum) ret.setDate(ret.getDate()+daysToSum);
+      return ret;
+    }
+
+    var option1 = (function()
+    {
+      var data = [
+        {
+          description: 'NHA-AM-420',
+          thresholds: [
+            { begin: createDate('09:00'), end: createDate('13:00') },
+            { begin: createDate('22:00'), end: createDate('05:00', 1) }
+          ],
+          markers: [ { description: 'Marker 1', when: createDate('15:30'), onClick: null }],
+          activities: [
+            { code: 'DESLC', description: 'Deslocamento', begin: createDate('22:00'), end: createDate('22:45') },
+            { code: 'ATIV', description: 'Atividade de nome maior para testar quebra de linha', begin: createDate('22:45'), end: createDate('23:30') },
+            { code: 'DESLC', description: 'Deslocamento', begin: createDate('23:30'), end: createDate('23:45') },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('23:45'), end: createDate('02:00', 1) },
+            { code: 'REFEI', description: 'Refeição', begin: createDate('02:00', 1), end: createDate('03:00', 1) },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('03:00', 1), end: createDate('04:30', 1) },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('04:30', 1), end: createDate('06:00', 1), color: "#e592d7", height: "25px" },
+          ]
+        },
+        {
+          description: 'NHA-AM-422',
+          thresholds: [{ begin: createDate('10:00'), end: createDate('19:53') }],
+          markers: [ { description: 'Marker 2', when: createDate('16:53') }],
+          activities: [
+            { code: 'DESLC', description: 'Deslocamento', begin: createDate('9:00'), end: createDate('9:15') },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('9:15'), end: createDate('9:30') },
+            { code: 'DESLC', description: 'Deslocamento', begin: createDate('9:30'), end: createDate('9:45') },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('9:45'), end: createDate('12:00') },
+            { code: 'REFEI', description: 'Refeição', begin: createDate('12:00'), end: createDate('13:00') },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('13:00'), end: createDate('18:00') },
+          ]
+        },
+        {
+          description: 'NHA-AM-432',
+          thresholds: [{ begin: createDate('7:08'), end: createDate('16:50') }],
+          markers: [
+            { description: 'Marker 3', when: createDate('17:38') },
+            { description: 'Marker 4', when: createDate('19:14'),
+            onClick: function(marker) {
+              alert('Marker custom on click: '+marker.description);
+            } }
+          ],
+          activities: [
+            { code: 'DESLC', description: 'Deslocamento', begin: createDate('9:00'), end: createDate('9:15'), onClick: null },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('9:15'), end: createDate('9:30'),
+            onClick: function(activity, row) {
+              alert('Activity custom on click: '+activity.description + ' of row ' + row.description);
+            }
+          },
+          { code: 'DESLC', description: 'Deslocamento', begin: createDate('9:30'), end: createDate('9:45') },
+          { code: 'ATIV', description: 'Atividade', begin: createDate('9:45'), end: createDate('12:00') },
+          { code: 'REFEI', description: 'Refeição', begin: createDate('12:00'), end: createDate('13:00') },
+          { code: 'ATIV', description: 'Atividade', begin: createDate('13:00'), end: createDate('18:30') },
+          ]
+        },
+        ];
+
+        var generalMarkers = [
+          { description: 'General Marker', when: createDate('15:30'), color: "#e942cd" },
+          { description: 'General Marker 2', when: createDate('17:55', 1), color: "#00ff08", width: "5px",
+            onClick: function(marker) {
+              alert('Custom marker click: '+marker.description);
+            }
+          }
+        ];
+
+      return {
+        data: data,
+        generalMarkers: generalMarkers,
+        style: {
+          months: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
+          activityStyle: {
+            'DESLC': { color: "#8e87ea", height: "30px" },
+            'ATIV': { color: "#b3b94e" },
+            'REFEI': { color: "#ea8787", height: "30px" }
+          },
+          showDateOnHeader: true,
+          dateHeaderFormat: function(date)
+          {
+            var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+            var months = ['Janeiro','Feveiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+            return days[date.getDay()] + ", " + date.getDate() + " de " + months[date.getMonth()] + " de " + date.getFullYear();
+          }
+        }
+      };
+    })();
+
+    var option2 = (function()
+    {
+      var data = [
+        {
+          description: 'NHA-AM-987',
+          thresholds: [{ begin: createDate('08:00'), end: createDate('17:00') }],
+          markers: [ { description: 'Now', when: new Date() }],
+          activities: [
+            { code: 'DESLC', description: 'Deslocamento', begin: createDate('08:00'), end: createDate('08:45') },
+            { code: 'ATIV', description: 'Atividade de nome maior para testar quebra de linha', begin: createDate('08:45'), end: createDate('09:30') },
+            { code: 'DESLC', description: 'Deslocamento', begin: createDate('09:30'), end: createDate('09:45') },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('09:45'), end: createDate('12:00') },
+            { code: 'REFEI', description: 'Refeição', begin: createDate('12:00'), end: createDate('13:00'), onClick: null },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('13:00'), end: createDate('14:30') },
+            { code: 'ATIV', description: 'Atividade', begin: createDate('14:30'), end: createDate('17:00'), color: "#e592d7", height: "25px" },
+          ]
+        }
+      ];
+
+      return {
+        data: data,
+        style: {
+          activityStyle: {
+            'DESLC': { color: "#fff", height: "30px" },
+            'ATIV': { color: "#7fad7f" },
+            'REFEI': { color: "#8d8d8d", height: "30px" },
+          }
+        },
+        events:
+        {
+          onActivityClick: function(activity) {
+            alert('Default activity click handler: '+activity.code);
+          },
+          onMarkerClick: function(marker) {
+            alert('Default marker click handler: '+marker.description);
+          }
+        }
+      };
+    })();
+
+    var option3 = {
+      data: [],
+      style: {
+        noDataText: "Nothing to show."
+      }
+    };
+
+  	$(document).ready(function()
+    {
+      $('#timeline').stackedGantt(option1);
+      $('#timeline2').stackedGantt(option2);
+      $('#timeline3').stackedGantt(option3);
+  	});
+
+  	</script>
+
+    <div>
+      <h1>StackedGantt Example with Two Instances</h1>
+    </div>
+
+
+  	<div id="timeline" style="width: 100%"></div>
+    <br/>
+    <div id="timeline2" style="width: 100%"></div>
+    <br/>
+    <div id="timeline3" style="width: 100%"></div>
+
+  </body>
+</html>
