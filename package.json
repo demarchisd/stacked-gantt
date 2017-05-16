@@ -1,0 +1,21 @@
+{
+  "name": "stacked-gantt",
+  "version": "0.1.0",
+  "description": "JQuery Gantt-like chart with stacked activities/tasks, providing more concise information.",
+  "author": "Bruno Kewitz Demarchi",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-qunit": "^2.0.0",
+    "grunt-contrib-uglify": "^3.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^2.0.0"
+  },
+  "keywords": ["javascript", "jquery", "chart", "gantt", "gantt-chart"]
+}

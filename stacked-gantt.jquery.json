@@ -1,0 +1,26 @@
+{
+  "name": "stacked-gantt",
+  "title": "Stacked Gantt",
+  "description": "JQuery Gantt-like chart with stacked activities/tasks, providing more concise information.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/demarchisd/stacked-gantt",
+  "author": {
+    "name": "Bruno Kewitz Demarchi",
+    "email": "demarchi.sd@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/demarchisd/stacked-gantt.git"
+  },
+  "bugs": "https://github.com/demarchisd/stacked-gantt/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/demarchisd/stacked-gantt/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "^1.7.0"
+  },
+  "keywords": ["javascript", "jquery", "chart", "gantt", "gantt-chart"]
+}
