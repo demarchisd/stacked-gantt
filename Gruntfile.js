@@ -76,7 +76,7 @@ module.exports = function(grunt) {
         tasks: ['jshint:test', 'qunit']
       },
       sass: {
-				files: ['sass/**/*.{scss,sass}','sass/_partials/**/*.{scss,sass}'],
+				files: ['src/*.{scss,sass}'],
 				tasks: ['sass:dist']
 			},
     },

@@ -248,6 +248,14 @@ $font-family: "Roboto", Roboto, "Times New Roman", Times, serif;
   text-align: center;
 }
 
+.sg_tooltip_description_title {
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;  
+  margin-bottom: 5px;
+}
+
 .sg_tooltip_description {
   display: inline-block;
   margin-top: 15px;

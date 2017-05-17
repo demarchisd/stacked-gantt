@@ -1,4 +1,4 @@
-/*! Stacked Gantt - v0.1.0 - 2017-05-16
+/*! Stacked Gantt - v0.1.0 - 2017-05-17
 * https://github.com/demarchisd/stacked-gantt
 * Copyright (c) 2017 Bruno Kewitz Demarchi; Licensed MIT */
 (function($)
@@ -820,36 +820,62 @@
  			};
  		}
 
- 		function appendTooltipContent($tooltip, title, description, badge, subtitle,
- 			badgeBGColor, badgeFontColor, squareBadge)
- 		{
- 			if(badge)
- 			{
- 				var $badge = $("<div>", { class: "sg_tooltip_badge", html: badge,
- 				css : { backgroundColor: badgeBGColor, color: badgeFontColor }});
+    function appendTooltipContent($tooltip, title, descriptions, badge, subtitle,
+			badgeBGColor, badgeFontColor, squareBadge)
+		{
+			if(badge)
+			{
+				var $badge = $("<div>", { class: "sg_tooltip_badge", html: badge,
+				css : { backgroundColor: badgeBGColor, color: badgeFontColor }});
 
- 				if(squareBadge)	$badge.addClass('square');
+				if(squareBadge)	$badge.addClass('square');
 
- 				$tooltip.append($badge);
- 			}
+				$tooltip.append($badge);
+			}
 
- 			var $title = $("<span>", { class: "sg_tooltip_title", html: title });
- 			$tooltip.append($title);
+			var $title = $("<span>", { class: "sg_tooltip_title", html: title });
+			$tooltip.append($title);
 
- 			if(subtitle)
- 			{
- 				var $subtitle = $("<span>", { class: "sg_tooltip_subtitle", html: subtitle });
- 				$tooltip.append($subtitle);
- 			}
+			if(subtitle)
+			{
+				var $subtitle = $("<span>", { class: "sg_tooltip_subtitle", html: subtitle });
+				$tooltip.append($subtitle);
+			}
 
- 			if(description)
- 			{
- 				var $wrapper = $("<div>", { class: "sg_tooltip_description_wrapper" });
- 				var $description = $("<div>", { class: "sg_tooltip_description", html: description });
- 				$wrapper.append($description);
- 				$tooltip.append($wrapper);
- 			}
- 		}
+			if(descriptions)
+			{
+				if(descriptions.constructor !== Array)
+					descriptions = [descriptions];
+
+				descriptions.forEach(function(descriptionObj)
+				{
+					var title;
+					var description;
+
+					if(typeof descriptionObj === "string") {
+						description = descriptionObj;
+					}
+					else
+					{
+						title = descriptionObj.title;
+						description = descriptionObj.description;
+					}
+
+					var $wrapper = $("<div>", { class: "sg_tooltip_description_wrapper" });
+					var $description = $("<div>", { class: "sg_tooltip_description" });
+					$wrapper.append($description);
+
+					if(title)
+					{
+						var $title = $("<span>", { class: "sg_tooltip_description_title", html: title });
+						$description.append($title);
+					}
+
+					$description.append(description);
+					$tooltip.append($wrapper);
+				});
+			}
+		}
 
  		function initTooltipRemoval($element, $tooltip, handleMouseOver)
  		{
