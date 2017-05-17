@@ -6,6 +6,7 @@ $color-medium: #e0e0e0;
 $color-low: #cccccc;
 $color-soft: #f0f0f0;
 $font-family: "Roboto", Roboto, "Times New Roman", Times, serif;
+$threshold-thickness: 2px;
 
 .sg_container_wrapper {
   white-space: nowrap;
@@ -116,31 +117,42 @@ $font-family: "Roboto", Roboto, "Times New Roman", Times, serif;
 }
 
 .sg_threshold {
-  height: 20px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   box-sizing: border-box;
-  float: left;
+
   pointer-events: none;
   z-index: 101;
-
-  border-left: 2px solid #000;
-  border-left: 2px solid rgba(0,0,0,0.3);
-  border-right: 2px solid #000;
-  border-right: 2px solid rgba(0,0,0,0.3);
 }
 
-.sg_threshold:before {
-  content: "";
+.sg_threshold_limit {
+  position: absolute;
   display: block;
-  height: 2px;
-  background-color: #000;
-  background-color: rgba(0,0,0,0.3);
 
-  position: relative;
+  width: $threshold-thickness;
+  height: 100%;
+}
+
+.sg_threshold_limit.begin {
+  left: 0;
+}
+
+.sg_threshold_limit.end {
+  right: 0;
+}
+
+.sg_threshold_line {
+  position: absolute;
+  display: block;
+
   top: 50%;
   transform: translateY(-50%);
+
+  width: calc(100% - #{$threshold-thickness * 2});
+  height: $threshold-thickness;
+
+  margin-left: $threshold-thickness;
 }
 
 .sg_activity {
@@ -252,7 +264,7 @@ $font-family: "Roboto", Roboto, "Times New Roman", Times, serif;
   display: block;
   font-size: 14px;
   font-weight: normal;
-  font-style: italic;  
+  font-style: italic;
   margin-bottom: 5px;
 }
 

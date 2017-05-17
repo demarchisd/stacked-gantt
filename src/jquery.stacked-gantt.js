@@ -19,6 +19,9 @@
  	var DEFAULT_MARKER_COLOR = "#e0a00e";
  	var DEFAULT_MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
  	var DEFAULT_NO_DATA_TEXT = "No data to display.";
+  var DEFAULT_THRESHOLD_HEIGHT = "20px";
+  var DEFAULT_THRESHOLD_COLOR = "#000000";
+  var DEFAULT_THRESHOLD_ALPHA = 0.3;
 
  	function defineFontColor(backgroundColor)
  	{
@@ -44,6 +47,10 @@
  			b: parseInt(result[3], 16)
  		} : null;
  	}
+
+  function getCssRgb(rgb, alpha) {
+    return 'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+alpha+')';
+  }
 
  	function addHorizontalScroll($element)
  	{
@@ -543,16 +550,33 @@
  		{
  			if(!threshold || !threshold.begin || !threshold.end) return;
 
+      var alpha = DEFAULT_THRESHOLD_ALPHA;
+      var color = getCssRgb(hexToRgb(getThresholdColor(threshold)), alpha);
+      var height = getThresholdHeight(threshold);
  			var lineWidth = calculateHoursDifferenceInPx(threshold.begin, threshold.end);
  			var beforeWidth = calculateHoursDifferenceInPx(threshold.begin, limits.begin);
 
  			var css = {
  				width: lineWidth,
- 				left: beforeWidth
+ 				left: beforeWidth,
+        height: height
  			};
+
+      var cssColor = {
+        backgroundColor: color
+      };
 
  			var $threshold = $("<div>", { class: "sg_threshold", css: css});
  			$rowValueContainer.append($threshold);
+
+      var $thresholdBegin = $("<div>", { class: "sg_threshold_limit begin", css: cssColor });
+      $threshold.append($thresholdBegin);
+
+      var $thresholdLine = $("<div>", { class: "sg_threshold_line", css: cssColor });
+      $threshold.append($thresholdLine);
+
+      var $thresholdEnd = $("<div>", { class: "sg_threshold_limit end", css: cssColor });
+      $threshold.append($thresholdEnd);
  		}
 
  		function createMarker(marker, $rowValueContainer, row)
@@ -717,9 +741,9 @@
 
  			if(style && style.height) {
  				return style.height;
- 			} else {
- 				return  DEFAULT_ACTIVITY_HEIGHT;
  			}
+
+      return  DEFAULT_ACTIVITY_HEIGHT;
  		}
 
  		function getActivityClick(activity)
@@ -727,6 +751,28 @@
  			if(activity.onClick !== undefined) return activity.onClick;
  			return defaultOnActivityClick;
  		}
+
+    function getThresholdColor(threshold)
+    {
+      if(threshold.color) return threshold.color;
+
+      if(style && style.thresholdColor) {
+        return style.thresholdColor;
+      }
+
+      return DEFAULT_THRESHOLD_COLOR;
+    }
+
+    function getThresholdHeight(threshold)
+    {
+      if(threshold.height) return threshold.height;
+
+      if(style && style.thresholdHeight) {
+        return style.thresholdHeight;
+      }
+
+      return  DEFAULT_THRESHOLD_HEIGHT;
+    }
 
  		function getMarkerWidth(marker)
  		{
@@ -992,4 +1038,4 @@
  			return result;
  		}
  	}
- }(jQuery));
+}(jQuery));

@@ -75,10 +75,10 @@ module.exports = function(grunt) {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'qunit']
       },
-      sass: {
-				files: ['src/*.{scss,sass}'],
-				tasks: ['sass:dist']
-			},
+      build: {
+        files: ['src/*.{js,scss,sass}'],
+        tasks: ['jshint', 'qunit', 'clean', 'concat', 'uglify', 'sass:dist']
+      },
     },
   });
 

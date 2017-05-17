@@ -37,7 +37,7 @@
         {
           description: 'NHA-AM-420',
           thresholds: [
-            { begin: createDate('09:00'), end: createDate('13:00') },
+            { begin: createDate('09:00'), end: createDate('13:00'), color: "#00c4ff", height: "20px" },
             { begin: createDate('22:00'), end: createDate('05:00', 1) }
           ],
           markers: [ { description: 'Marker 1', when: createDate('15:30'), onClick: null }],
@@ -115,7 +115,9 @@
             var months = ['Janeiro','Feveiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
             return days[date.getDay()] + ", " + date.getDate() + " de " + months[date.getMonth()] + " de " + date.getFullYear();
-          }
+          },
+          thresholdHeight: "15px",
+          thresholdColor: "#000000"
         }
       };
     })();
