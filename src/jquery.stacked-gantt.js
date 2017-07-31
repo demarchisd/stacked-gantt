@@ -70,9 +70,9 @@
  	{
  		var $this = $(this);
 
- 		var stackedGantt = new StackedGantt($this);
- 		$this.stackedGantt = stackedGantt;
-
+ 		var stackedGantt = new StackedGantt($this); 		
+		$this.stackedGantt = stackedGantt;
+		
  		stackedGantt.clearOptions();
  		stackedGantt.clearGraphicElements();
 
@@ -80,7 +80,10 @@
  		stackedGantt.build();
 
  		$this.update = function(data, generalMarkers) { stackedGantt.update(data, generalMarkers); };
-
+		$this.zoomIn = function() { stackedGantt.zoomIn(); };
+		$this.zoomOut = function() { stackedGantt.zoomOut(); };
+		$this.destroy = function() { stackedGantt.destroy(); };
+		
  		return $this;
  	};
 
@@ -184,6 +187,30 @@
  				defaultOnGeneralMarkerClick = events.onGeneralMarkerClick;
  			}
  		};
+		
+		this.zoomIn = function()
+		{
+			hourWidth = hourWidth * 1.1;
+			this.clearGraphicElements();
+			this.build();
+		};
+		
+		this.zoomOut = function()
+		{
+			hourWidth = hourWidth * 0.9;
+			this.clearGraphicElements();
+			this.build();
+		};
+
+		this.destroy = function()
+		{
+			this.clearGraphicElements();
+			delete $this.update;
+			delete $this.zoomIn;
+			delete $this.zoomOut;
+			delete $this.destroy;
+			delete $this.stackedGantt;
+		};
 
  		function sanitizeDataDates(data)
  		{

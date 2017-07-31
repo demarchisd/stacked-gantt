@@ -139,7 +139,39 @@ var options = {
 Then the two first activities of your lists will have their bars colored with `"#8e87ea"` and height of `"30px"`; the third activity will have its bar colored with `"#b3b94e"` and the default height; while the fourth activity will have both default color and height.
 
 ### Functions
-_(Coming soon)_
+When you create a stackedGantt, you can store its instance in a variable and call the following functions:
+
+- [`update()`](#update);
+- [`zoomIn()`](#zoomin);
+- [`zoomOut()`](#zoomout);
+- [`destroy()`](#destroy).
+
+For example:
+
+```js
+$(document).ready(function() {    
+	const stackedGantt = $("#gantt").stackedGantt(options);
+	stackedGantt.zoomIn();
+	stackedGantt.zoomOut();
+});
+```
+
+#### `update()`
+The update function can be used to update the chart's `data` and `generalMarkers` without changing the custom `style` and `events` properties that were defined at instantiation time. The following parameters may be supplied:
+
+| name | type | description | optionality |
+| :- | :- | :- | :- |
+| data | [`data`](#data) | Contains the data for each row of the chart. | mandatory |
+| generalMarkers | [`generalMarkers`](#generalmarkers) |  Contains data for the markers that crosses all rows in the chart. | optional |
+
+#### `zoomIn()`
+The `zoomIn` function increases by 10% the hour's width in the chart. No parameters are necessary.
+
+#### `zoomOut()`
+The `zoomOut` function decreases by 10% the hour's width in the chart. No parameters are necessary.
+
+#### `destroy()`
+The `destroy` function removes all graphical elements from the screen and also destroys the stackedGantt instance. No parameters are necessary.
 
 ## Examples
 _(Coming soon)_
