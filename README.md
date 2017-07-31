@@ -60,9 +60,9 @@ The `style` object may have the following properties for custom display settings
 | hourWidth | `integer` | Defines the width of one hour in the chart in px. | `80` |
 | months | `[string]` | Array that defines the format of the months' names. | `['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']` |
 | formatHour | `function` | Function that customizes the hour format used in the chart. Receives a `Date` param and must return a `string` | Returns the hour in the format `hh24:mi`. |
-| formatDate | `function` | Function that customizes the date format used in the chart. Receives a `Date` param and must return a `string`. | Returns the date in the format `dd/MMM`, where `MMM` is defined by the `style.months` property. |
+| formatDate | `function` | Function that customizes the date format used in the chart. Receives a `Date` param and must return a `string`. | Returns the date in the format `dd/MMM`, where `MMM` is defined by the [`style.months`](#style) property. |
 | showDateOnHeader | `boolean` | Defines if the date should be displayed on the header. | `false` |
-| dateHeaderFormat | `function` | Function that customizes the date format only for the header. Receives a `Date` param and must return a `string`. | Uses the `style.formatDate` function. |
+| dateHeaderFormat | `function` | Function that customizes the date format only for the header. Receives a `Date` param and must return a `string`. | Uses the [`style.formatDate`](#style) function. |
 
 #### `events`
 The `events` object may have the following properties for custom callbacks:
@@ -84,9 +84,9 @@ An `Activity` object may have the following properties:
 | description | `string` | The activity's description. It will be displayed on the tooltip when the user gets the mouse over the activity. | mandatory |
 | begin | `Date` | The activity's initial date/time. | mandatory |
 | end | `Date` | The activity's final date/time. | mandatory |
-| color | `string` | The activity's bar custom color in hex (e.g.: `'#e592d7'`). If set, overrides the `style.activityStyle` option. | optional |
-| height | `string` | The activity's bar custom height in px (e.g.: `'30px'`). If set, overrides the `style.activityStyle` option. | optional |
-| onClick | `function` | Callback for the activity's click. If set, overrides the `events.onActivityClick`. | optional |
+| color | `string` | The activity's bar custom color in hex (e.g.: `'#e592d7'`). If set, overrides the [`style.activityStyle`](#style) option. | optional |
+| height | `string` | The activity's bar custom height in px (e.g.: `'30px'`). If set, overrides the [`style.activityStyle`](#style) option. | optional |
+| onClick | `function` | Callback for the activity's click. If set, overrides the [`events.onActivityClick`](#events). | optional |
 
 #### `Threshold`
 A `Threshold` object may have the following properties:
@@ -95,8 +95,8 @@ A `Threshold` object may have the following properties:
 | :- | :- | :- | :- |
 | begin | `Date` | The threshold's initial date/time | mandatory |
 | end | `Date` | The threshold's final date/time | mandatory |
-| color | `string` | The threshold's custom color in hex (e.g.: `'#e592d7'`). If set, overrides the `style.thresholdColor` option. | optional |
-| height | `string` | The threshold's custom height in px (e.g.: `'30px'`). If set, overrides the `style.thresholdHeight` option. | optional |
+| color | `string` | The threshold's custom color in hex (e.g.: `'#e592d7'`). If set, overrides the [`style.thresholdColor`](#style) option. | optional |
+| height | `string` | The threshold's custom height in px (e.g.: `'30px'`). If set, overrides the [`style.thresholdHeight`](#style) option. | optional |
 
 #### `Marker`
 A `Marker` object may have the following properties:
@@ -108,12 +108,12 @@ A `Marker` object may have the following properties:
 | width | `string` | The marker's line width in px (e.g.: `'4px'`). | optional |
 | height | `string` | The marker's line height in px (e.g.: `'20px'`). | optional |
 | color | `string` | The marker's custom color in hex (e.g.: `'#e592d7'`). | optional |
-| onClick | `function` | Callback for the marker's click. If set, overrides the `events.onMarkerClick` or `events.onGeneralMarkerClick`. | optional |
+| onClick | `function` | Callback for the marker's click. If set, overrides the [`events.onMarkerClick`](#events) or [`events.onGeneralMarkerClick`](#events). | optional |
 
 #### `ActivityStyle`
 An `ActivityStyle` object is composed by the activities `code`s that are wanted to have customized displaying (`color` and `height`) settings. For example, if you have the following activities in your data:
 
-```
+```js
 activities: [
   { code: 'TYPE_1', description: 'Activity 1 of Type 1', ... },
   { code: 'TYPE_1', description: 'Activity 2 of Type 1', ... },
@@ -124,7 +124,7 @@ activities: [
 
 And you define the following `activityStyle`:
 
-```
+```js
 var options = {
   data: ...,
   style: {
