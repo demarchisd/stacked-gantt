@@ -105,7 +105,32 @@ A `Marker` object may have the following properties:
 | onClick | `function` | Callback for the marker's click. If set, overrides the `events.onMarkerClick` or `events.onGeneralMarkerClick`. | optional |
 
 #### `ActivityStyle`
-_(Coming soon)_
+An `ActivityStyle` object is composed by the activities `code`s that are wanted to have customized displaying (`color` and `height`) settings. For example, if you have the following activities in your data:
+
+```
+activities: [
+  { code: 'TYPE_1', description: 'Activity 1 of Type 1', ... },
+  { code: 'TYPE_1', description: 'Activity 2 of Type 1', ... },
+  { code: 'TYPE_2', description: 'Activity 1 of Type 2', ... },
+  { code: 'TYPE_3', description: 'Activity 1 of Type 3', ... }
+]
+```
+
+And you define the following `activityStyle`:
+
+```
+var options = {
+  data: ...,
+  style: {
+    activityStyle: {
+      'TYPE_1': { color: "#8e87ea", height: "30px" },
+      'TYPE_2': { color: "#b3b94e" }	
+    }
+  }
+}
+```
+
+Then the two first activities of your lists will have their bars colored with `"#8e87ea"` and height of `"30px"`; the third activity will have its bar colored with `"#b3b94e"` and the default height; while the fourth activity will have both default color and height.
 
 ### Functions
 _(Coming soon)_
