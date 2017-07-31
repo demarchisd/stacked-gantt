@@ -65,7 +65,13 @@ The `style` object may have the following properties for custom display settings
 | dateHeaderFormat | `function` | Function that customizes the date format only for the header. Receives a `Date` param and must return a `string`. | Uses the `style.formatDate` function. |
 
 #### `events`
-_(Coming soon)_
+The `events` object may have the following properties for custom callbacks:
+
+| name | description | params |
+| :- | :- | :- |
+| onActivityClick | Called when a [`Activity`](#activity)'s bar is clicked. | `activity`: the activity being clicked; `row`: the row object that contains this activity; `data`: all chart's data. |
+| onMarkerClick | Called when a [`Marker`](#marker)'s line is clicked. | `marker`: the marker being clicked; `row`: the row object that contains this marker; `data`: all chart's data. |
+| onGeneralMarkerClick | Called when a [`Marker`](#marker)'s line from [`generalMarkers`](#generalmarkers) list is clicked. | `marker`: the general marker being clicked; `data`: all chart's data. |
 
 ### Types
 
