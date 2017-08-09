@@ -7,8 +7,8 @@ JQuery Gantt-like chart with stacked activities/tasks, providing more concise in
 ## Getting Started
 Download the [js][JS] and the [css][CSS] files.
 
-[JS]: https://raw.githubusercontent.com/demarchisd/stacked-gantt/master/dist/jquery.stacked-gantt.min.js
-[CSS]: https://raw.githubusercontent.com/demarchisd/stacked-gantt/master/dist/jquery.stacked-gantt.css
+[JS]: dist/jquery.stacked-gantt.min.js?raw=true
+[CSS]: dist/jquery.stacked-gantt.css?raw=true
 
 In your web page:
 
@@ -176,4 +176,4 @@ The `zoomOut` function decreases by 10% the hour's width in the chart. No parame
 The `destroy` function removes all graphical elements from the screen and also destroys the stackedGantt instance. No parameters are necessary.
 
 ## Examples
-_(Coming soon)_
+[Click here to see the working example code.](example/index.html)
