@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>StackedGantt Example</title>
+  </head>
+  <body>
+    <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        font-family: Roboto, Times
+      }
+
+      h1 {
+        display: inline-block;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../dist/jquery.stacked-gantt.css">
+  	<script src="../libs/jquery/jquery.js"></script>
+  	<script src="../dist/jquery.stacked-gantt.min.js"></script>
+  	<script>
+
+    function createDate(time, daysToSum)
+    {
+      var split = time.split(':');
+      var ret = new Date();
+      ret.setHours(split[0]);
+      ret.setMinutes(split[1]);
+
+      if(daysToSum) ret.setDate(ret.getDate()+1);
+      return ret;
+    }
+
+    var data = [
+      {
+        description: 'Joe Montana',
+        thresholds: [{ begin: createDate('09:00'), end: createDate('12:00') },
+                     { begin: createDate('13:00'), end: createDate('18:00') }],
+        markers: [ { description: 'Remember to take a break!', when: createDate('15:30'), onClick: null }],
+        activities: [
+          { code: 'STDUP', description: 'Standup Meeting', begin: createDate('09:00'), end: createDate('09:30') },
+          { code: 'DEV', description: 'Users CRUD', begin: createDate('09:30'), end: createDate('12:00') },
+          { code: 'REV', description: 'Code Review', begin: createDate('13:00'), end: createDate('14:00') },
+          { code: 'DEV', description: 'Permissions CRUD', begin: createDate('14:00'), end: createDate('18:00') },
+        ]
+      },
+      {
+        description: 'Jack Wimbledon',
+        thresholds: [{ begin: createDate('08:00'), end: createDate('11:30') },
+                     { begin: createDate('12:30'), end: createDate('17:00') }],
+        markers: [ { description: 'Remember to take a break!', when: createDate('14:30'), onClick: null }],
+        activities: [
+          { code: 'REV', description: 'Code Review', begin: createDate('08:00'), end: createDate('09:00') },
+          { code: 'STDUP', description: 'Standup Meeting', begin: createDate('09:00'), end: createDate('09:30') },
+          { code: 'DEV', description: 'Calendar CRUD', begin: createDate('09:30'), end: createDate('11:30') },
+          { code: 'DEV', description: 'Calendar CRUD', begin: createDate('12:30'), end: createDate('17:00') },
+        ]
+      },
+      {
+        description: 'Stella Alberton',
+        activities: [
+          { code: 'STDUP', description: 'Standup Meeting', begin: createDate('09:00'), end: createDate('09:30') },
+          { code: 'DEVOPS', description: 'Config Kubernetes', begin: createDate('09:30'), end: createDate('12:00') },
+          { code: 'DEVOPS', description: 'Config Kubernetes', begin: createDate('20:15'), end: createDate('02:00', 1) },
+        ]
+      },
+    ];
+
+    var generalMarkers = [
+        { description: "Investor's visit", when: createDate('13:15'), color: "#e942cd", width: "5px",
+          onClick: function(marker) {
+            alert('Very important! - '+marker.description);
+          }
+        }
+    ];
+
+    var options = {
+      data: data,
+      generalMarkers: generalMarkers,
+      style: {
+        months: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
+        activityStyle: {
+          'STDUP': { color: "#8e87ea", height: "30px" },
+          'DEV': { color: "#ea8787" },
+          'DEVOPS': { color: "#e8e44e" },
+        },
+        showDateOnHeader: true,
+        dateHeaderFormat: function(date)
+        {
+          var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+          var months = ['January','February','Martch','April','May','June','July','August','September','October','November','December'];
+
+          return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() +"th - " + date.getFullYear();
+        },
+        descriptionContainerWidth: '200px'
+      }
+    };
+
+  	$(document).ready(function() {
+      var $timeline = $('#timeline').stackedGantt(options);
+  	});
+
+  	</script>
+
+    <div>
+      <h1>StackedGantt Example</h1>
+    </div>
+
+  	<div id="timeline" style="width: 100%"></div>
+
+  </body>
+</html>
