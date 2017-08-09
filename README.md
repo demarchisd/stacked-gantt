@@ -16,7 +16,7 @@ In your web page:
 <script src="jquery.js"></script>
 <script src="dist/jquery.stacked-gantt.min.js"></script>
 <link rel="stylesheet" type="text/css" href="dist/jquery.stacked-gantt.css">
-<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" /> <!--Optional, but recommended-->
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" /> <!--Optional, but recommended-->
 <script>
 $(document).ready(function() {
   $("#gantt").stackedGantt(options); // more information about options can be found on documentation
