@@ -19,9 +19,9 @@
  	var DEFAULT_MARKER_COLOR = "#e0a00e";
  	var DEFAULT_MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
  	var DEFAULT_NO_DATA_TEXT = "No data to display.";
-  var DEFAULT_THRESHOLD_HEIGHT = "20px";
-  var DEFAULT_THRESHOLD_COLOR = "#000000";
-  var DEFAULT_THRESHOLD_ALPHA = 0.3;
+	var DEFAULT_THRESHOLD_HEIGHT = "20px";
+	var DEFAULT_THRESHOLD_COLOR = "#000000";
+	var DEFAULT_THRESHOLD_ALPHA = 0.3;
 
  	function defineFontColor(backgroundColor)
  	{
@@ -110,6 +110,8 @@
  		var noDataText;
  		var $lastVisibleHeader;
  		var dateHeaders;
+		var defaultBeginDate;
+		var defaultEndDate;
 
  		//events
  		var defaultOnActivityClick;
@@ -143,6 +145,8 @@
  			dateHeaderFormat = null;
  			$lastVisibleHeader = null;
  			dateHeaders = null;
+			defaultBeginDate = null;
+			defaultEndDate = null;
  		};
 
  		this.clearGraphicElements = function() {
@@ -163,6 +167,8 @@
  				months = style.months ? style.months : DEFAULT_MONTHS;
  				showDateOnHeader = style.showDateOnHeader;
  				noDataText = style.noDataText ? style.noDataText: DEFAULT_NO_DATA_TEXT;
+				defaultBeginDate = style.defaultBeginDate ? style.defaultBeginDate : new Date(new Date().setHours(1)).setMinutes(0);
+				defaultEndDate = style.defaultEndDate ? style.defaultEndDate : new Date(new Date().setHours(23)).setMinutes(0);
 
  				if(style.formatHour) formatHour = style.formatHour;
  				if(style.formatDate) formatDate = style.formatDate;
@@ -391,9 +397,14 @@
 
  		function getRowBegin(row)
  		{
- 			var begins = row.activities.map(function(activity) {
- 				return activity.begin;
- 			});
+			var begins = [];
+ 			
+			if(row.activities)
+			{			 
+				begins = begins.concat(row.activities.map(function(activity) {
+					return activity.begin;
+				}));				
+			}	
 
  			if(row.markers)
  			{
@@ -408,20 +419,28 @@
  					return threshold.begin;
  				}));
  			}
-
- 			var lowestBegin = begins.reduce(function(lowestBegin, currentBegin) {
- 				return currentBegin < lowestBegin ? currentBegin : lowestBegin;
- 			});
+			
+			if(!begins.length)
+				return defaultBeginDate;
+			
+			var lowestBegin = begins.reduce(function(lowestBegin, currentBegin) {
+				return currentBegin < lowestBegin ? currentBegin : lowestBegin;
+			});
 
  			return lowestBegin;
  		}
 
  		function getRowEnd(row)
  		{
- 			var ends = row.activities.map(function(activity) {
- 				return activity.end;
- 			});
-
+			var ends = [];
+ 			
+			if(row.activities)
+			{			 
+				ends = ends.concat(row.activities.map(function(activity) {
+					return activity.end;
+				}));				
+			}
+			
  			if(row.markers)
  			{
  				ends = ends.concat(row.markers.map(function(marker) {
@@ -435,10 +454,13 @@
  					return threshold.end;
  				}));
  			}
-
- 			var highestEnd = ends.reduce(function(highestEnd, currentEnd) {
- 				return currentEnd > highestEnd ? currentEnd : highestEnd;
- 			});
+			
+			if(!ends.length)
+				return defaultEndDate;
+			
+			var highestEnd = ends.reduce(function(highestEnd, currentEnd) {
+				return currentEnd > highestEnd ? currentEnd : highestEnd;
+			});
 
  			return highestEnd;
  		}

@@ -67,6 +67,8 @@ The `style` object may have the following properties for custom display settings
 | formatDate | `function` | Function that customizes the date format used in the chart. Receives a `Date` param and must return a `string`. | Returns the date in the format `dd/MMM`, where `MMM` is defined by the [`style.months`](#style) property. |
 | showDateOnHeader | `boolean` | Defines if the date should be displayed on the header. | `false` |
 | dateHeaderFormat | `function` | Function that customizes the date format only for the header. Receives a `Date` param and must return a `string`. | Uses the [`style.formatDate`](#style) function. |
+| defaultBeginDate | `Date` | The default starting date for the chart build. If no activities, markers or thresholds are informed, this property will be used. | The current date at 1am |
+| defaultEndDate | `Date` | The default ending date for the chart build. If no activities, markers or thresholds are informed, this property will be used. | The current date at 23pm |
 
 #### `events`
 The `events` object may have the following properties for custom callbacks:
