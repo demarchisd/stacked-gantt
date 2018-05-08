@@ -85,6 +85,8 @@
 		$this.zoomOut = function() { stackedGantt.zoomOut(); };
 		$this.destroy = function() { stackedGantt.destroy(); };
 		$this.getData = function() { return stackedGantt.getData(); };
+		$this.getGeneralMarkers = function() { return stackedGantt.getGeneralMarkers(); };
+		$this.getGeneralHighlights = function() { return stackedGantt.getGeneralHighlights(); };
 		
  		return $this;
  	};
@@ -245,6 +247,14 @@
 
 		this.getData = function() {
 			return data;
+		};
+
+		this.getGeneralMarkers = function() {
+			return generalMarkers;
+		};
+
+		this.getGeneralHighlights = function() {
+			return generalHighlights;
 		};
 
  		function sanitizeDataDates(data)
