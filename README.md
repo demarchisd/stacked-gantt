@@ -168,8 +168,8 @@ When you create a stackedGantt, you can store its instance in a variable and cal
 - [`zoomIn()`](#zoomin);
 - [`zoomOut()`](#zoomout);
 - [`destroy()`](#destroy);
-- [`getData()`](#getdata).
-- [`getGeneralMarkers()`](#getgeneralmarkers).
+- [`getData()`](#getdata);
+- [`getGeneralMarkers()`](#getgeneralmarkers);
 - [`getGeneralHighlights()`](#getgeneralhighlights).
 
 For example:
