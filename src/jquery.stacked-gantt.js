@@ -2,7 +2,7 @@
  * stacked-gantt
  * https://github.com/demarchisd/stacked-gantt
  *
- * Copyright (c) 2017 Bruno Kewitz Demarchi
+ * Copyright (c) 2018 Bruno Kewitz Demarchi
  * Licensed under the MIT license.
  */
  (function($)
@@ -10,13 +10,14 @@
  	'use strict';
 
  	var DEFAULT_DESCRIPTION_CONTAINER_WIDTH = '250px';
- 	var DEFAULT_HOUR_WIDTH = 80;
+	var DEFAULT_HOUR_WIDTH = 80;	 
  	var DEFAULT_ACTIVITY_COLOR = "#7fad7f";
  	var DEFAULT_ACTIVITY_HEIGHT = '20px';
  	var DEFAULT_ROW_HEIGHT = '50px';
  	var DEFAULT_MARKER_HEIGHT = '30px';
  	var DEFAULT_MARKER_WIDTH = '3px';
- 	var DEFAULT_MARKER_COLOR = "#e0a00e";
+	var DEFAULT_MARKER_COLOR = "#e0a00e";
+	var DEFAULT_HIGHLIGHT_COLOR = "#e0a00e";
  	var DEFAULT_MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
  	var DEFAULT_NO_DATA_TEXT = "No data to display.";
 	var DEFAULT_THRESHOLD_HEIGHT = "20px";
@@ -48,9 +49,9 @@
  		} : null;
  	}
 
-  function getCssRgb(rgb, alpha) {
-    return 'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+alpha+')';
-  }
+	function getCssRgb(rgb, alpha) {
+		return 'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+alpha+')';
+	}
 
  	function addHorizontalScroll($element)
  	{
@@ -79,10 +80,11 @@
  		stackedGantt.config(options);
  		stackedGantt.build();
 
- 		$this.update = function(data, generalMarkers) { stackedGantt.update(data, generalMarkers); };
+ 		$this.update = function(data, generalMarkers, generalHighlights) { stackedGantt.update(data, generalMarkers, generalHighlights); };
 		$this.zoomIn = function() { stackedGantt.zoomIn(); };
 		$this.zoomOut = function() { stackedGantt.zoomOut(); };
 		$this.destroy = function() { stackedGantt.destroy(); };
+		$this.getData = function() { return stackedGantt.getData(); };
 		
  		return $this;
  	};
@@ -96,7 +98,8 @@
  		var $timeHeaderContainer;
  		var limits;
  		var data;
- 		var generalMarkers;
+		var generalMarkers;
+		var generalHighlights;
  		var descriptionContainerWidth;
  		var hourWidth;
  		var hoursQuantity;
@@ -105,23 +108,29 @@
  		var activityStyle;
  		var months;
  		var listeningResize;
- 		var showDateOnHeader;
+		var showDateOnHeader;
+		var showTimeOnHeader; 
  		var dateHeaderFormat;
  		var noDataText;
  		var $lastVisibleHeader;
- 		var dateHeaders;
+		var dateHeaders;		 
 		var defaultBeginDate;
 		var defaultEndDate;
+		var beginDate;
+		var endDate;
+		var autoAdjustLimits;
+		var rowValueContainerWidth;
 
  		//events
  		var defaultOnActivityClick;
  		var defaultOnMarkerClick;
  		var defaultOnGeneralMarkerClick;
 
- 		this.update = function(pData, pGeneralMarkers)
+ 		this.update = function(pData, pGeneralMarkers, pGeneralHighlights)
  		{
  			data = pData;
- 			generalMarkers = pGeneralMarkers ? pGeneralMarkers : [];
+			generalMarkers = pGeneralMarkers ? pGeneralMarkers : [];
+			generalHighlights = pGeneralHighlights ? pGeneralHighlights : [];
  			this.clearGraphicElements();
  			this.build();
  		};
@@ -130,7 +139,8 @@
  		{
  			limits = null;
  			data = null;
- 			generalMarkers = null;
+			generalMarkers = null;
+			generalHighlights = null;
  			descriptionContainerWidth = null;
  			hourWidth = null;
  			hoursQuantity = null;
@@ -141,12 +151,17 @@
  			defaultOnActivityClick = null;
  			defaultOnMarkerClick = null;
  			defaultOnGeneralMarkerClick = null;
- 			showDateOnHeader = null;
+			showDateOnHeader = null;
+			showTimeOnHeader = true;
  			dateHeaderFormat = null;
  			$lastVisibleHeader = null;
  			dateHeaders = null;
 			defaultBeginDate = null;
 			defaultEndDate = null;
+			beginDate = null;
+			endDate = null;
+			autoAdjustLimits = null;
+			rowValueContainerWidth = null;
  		};
 
  		this.clearGraphicElements = function() {
@@ -156,7 +171,8 @@
  		this.config = function(options)
  		{
  			data = sanitizeDataDates(options.data);
- 			generalMarkers = sanitizeGeneralMarkersDates(options.generalMarkers ? options.generalMarkers : []);
+			generalMarkers = sanitizeGeneralMarkersDates(options.generalMarkers ? options.generalMarkers : []);
+			generalHighlights = sanitizeGeneralHighlightsDates(options.generalHighlights ? options.generalHighlights : []);
  			style = options.style;
 
  			if(style)
@@ -165,13 +181,22 @@
  				activityStyle = style.activityStyle ? style.activityStyle : {};
  				hourWidth = style.hourWidth ? style.hourWidth : DEFAULT_HOUR_WIDTH;
  				months = style.months ? style.months : DEFAULT_MONTHS;
- 				showDateOnHeader = style.showDateOnHeader;
- 				noDataText = style.noDataText ? style.noDataText: DEFAULT_NO_DATA_TEXT;
+				showDateOnHeader = style.showDateOnHeader;				
+				noDataText = style.noDataText ? style.noDataText: DEFAULT_NO_DATA_TEXT;
 				defaultBeginDate = style.defaultBeginDate ? style.defaultBeginDate : new Date(new Date().setHours(1)).setMinutes(0);
 				defaultEndDate = style.defaultEndDate ? style.defaultEndDate : new Date(new Date().setHours(23)).setMinutes(0);
-
- 				if(style.formatHour) formatHour = style.formatHour;
- 				if(style.formatDate) formatDate = style.formatDate;
+				beginDate = style.beginDate;
+				endDate = style.endDate; 
+				autoAdjustLimits = style.autoAdjustLimits === false ? false : true;
+				
+				if(style.showTimeOnHeader !== undefined) 
+					showTimeOnHeader = style.showTimeOnHeader;
+				 
+				if(style.formatHour) 
+					formatHour = style.formatHour;
+				 
+				if(style.formatDate) 
+					formatDate = style.formatDate;
 
  				dateHeaderFormat = style.dateHeaderFormat ? style.dateHeaderFormat : formatDate;
  			}
@@ -218,6 +243,10 @@
 			delete $this.stackedGantt;
 		};
 
+		this.getData = function() {
+			return data;
+		};
+
  		function sanitizeDataDates(data)
  		{
  			data.forEach(function(row)
@@ -256,7 +285,19 @@
  			});
 
  			return generalMarkers;
- 		}
+		 }
+		 
+		function sanitizeGeneralHighlightsDates(generalHighlights)
+		{
+			if(!generalHighlights) return;
+
+			generalHighlights.forEach(function(highlight) {
+				highlight.begin = sanitizeDate(highlight.begin);
+				highlight.end = sanitizeDate(highlight.end);
+			});
+
+			return generalHighlights;
+		}
 
  		function sanitizeDate(date)
  		{
@@ -280,9 +321,10 @@
  			{
  				createContainers();
  				defineLimits();
- 				createHeader();
- 				createRows();
- 				createGeneralMarkers();
+				createHeader();
+				createRows();
+				createGeneralMarkers();
+				createGeneralHighlights();
  				listenToWindowResize();
  			}
  		};
@@ -301,9 +343,7 @@
  			$container = $("<div>", {class: "sg_container"});
  			$wrapContainer.append($container);
 
- 			var headerCss = showDateOnHeader ? "with_datetime_header" : "with_time_header";
-
- 			$descriptionsContainer = $("<div>", {class: "sg_desc_container "+headerCss,
+ 			$descriptionsContainer = $("<div>", {class: "sg_desc_container "+getHeaderCss(),
  				css: { width: descriptionContainerWidth }});
  			$container.append($descriptionsContainer);
 
@@ -332,7 +372,6 @@
  				var hourIndex = Math.floor(scrollLeft / hourWidth);
  				var hour = hours[hourIndex];
  				$lastVisibleHeader = createDateHeader(hour, null, scrollLeft, headerConflict);
-
  			});
  		}
 
@@ -367,13 +406,18 @@
  				})
  				.concat(generalMarkers.map(function(marker) {
  					return marker.when;
- 				}))
+				 }))
+ 				.concat(generalHighlights.map(function(highlight) {
+					return highlight.begin;
+				}))				 
  				.reduce(function(lowestBegin, currentBegin) {
  					return currentBegin < lowestBegin ? currentBegin : lowestBegin;
  				}));
+			
+			if(autoAdjustLimits && (begin.getMinutes() <= 10 || begin.getMinutes() >= 50)) 
+				begin.setHours(begin.getHours()-1);
 
- 			if(begin.getMinutes() <= 10) begin.setHours(begin.getHours()-1);
- 			begin.setMinutes(0);
+			begin.setMinutes(0);
 
  			var end = new Date(rowsLimits
  				.map(function(rowLimit) {
@@ -381,13 +425,18 @@
  				})
  				.concat(generalMarkers.map(function(marker) {
  					return marker.when;
- 				}))
+				}))
+				.concat(generalHighlights.map(function(highlight) {
+					return highlight.end;
+				}))					 
  				.reduce(function(highestEnd, currentEnd) {
  					return currentEnd > highestEnd ? currentEnd : highestEnd;
  				}));
 
- 			if(end.getMinutes() >= 50) end.setHours(end.getHours()+1);
- 			end.setMinutes(0);
+			if(autoAdjustLimits && (end.getMinutes() <= 10 || end.getMinutes() >= 50)) 
+				end.setHours(end.getHours()+1);
+				 
+			end.setMinutes(0);
 
  			limits = {
  				begin: begin,
@@ -422,7 +471,10 @@
 			
 			if(!begins.length)
 				return defaultBeginDate;
-			
+				
+			if(beginDate)
+				begins.push(beginDate);
+
 			var lowestBegin = begins.reduce(function(lowestBegin, currentBegin) {
 				return currentBegin < lowestBegin ? currentBegin : lowestBegin;
 			});
@@ -433,7 +485,7 @@
  		function getRowEnd(row)
  		{
 			var ends = [];
- 			
+
 			if(row.activities)
 			{			 
 				ends = ends.concat(row.activities.map(function(activity) {
@@ -453,11 +505,14 @@
  				ends = ends.concat(row.thresholds.map(function(threshold) {
  					return threshold.end;
  				}));
- 			}
-			
+			 }
+			 
 			if(!ends.length)
-				return defaultEndDate;
+			 	return defaultEndDate;
 			
+			if(endDate)
+				ends.push(endDate);				 
+
 			var highestEnd = ends.reduce(function(highestEnd, currentEnd) {
 				return currentEnd > highestEnd ? currentEnd : highestEnd;
 			});
@@ -473,7 +528,7 @@
  				$dateHeaderContainer = $("<div>", {class: "sg_date_header_container"});
  				$valuesContainer.append($dateHeaderContainer);
  			}
-
+			 
  			$timeHeaderContainer = $("<div>", {class: "sg_time_header_container"});
  			$valuesContainer.append($timeHeaderContainer);
 
@@ -482,13 +537,11 @@
 
  			hours.forEach(function(hour, hourIndex)
  			{
- 				createTimeHeader(hour);
+				if(showTimeOnHeader)
+ 					createTimeHeader(hour);
 
- 				if(showDateOnHeader) {
- 					if(hourIndex === 0 || hour.getHours() === 0) {
- 						dateHeaders.push(createDateHeader(hour, hourIndex));
- 					}
- 				}
+				if(showDateOnHeader && (hourIndex === 0 || hour.getHours() === 0) && !checkHeaderConflict(hourWidth * hourIndex))								
+					dateHeaders.push(createDateHeader(hour, hourIndex));
  			});
  		}
 
@@ -523,7 +576,7 @@
  		function getHoursBetweenLimits()
  		{
  			var ret = [];
-
+			
  			for ( var hour = new Date(limits.begin);
  						hour <= limits.end;
  						hour.setHours(hour.getHours() + 1)
@@ -536,6 +589,10 @@
 
  		function createRows()
  		{
+			var $lastHeader = dateHeaders[dateHeaders.length-1];
+			var lastHeaderRightPosition = Math.ceil(parseInt($lastHeader.css('left')) + $lastHeader.outerWidth()) + 12;
+			rowValueContainerWidth = Math.max(hoursQuantity * hourWidth, lastHeaderRightPosition);
+
  			data.forEach(function(row, rowIndex)
  			{
  				var even = rowIndex % 2 === 0;
@@ -562,13 +619,12 @@
 
  		function createRowTimeline(row, even)
  		{
- 			var height = getRowHeight();
- 			var width = hoursQuantity * hourWidth;
+ 			var height = getRowHeight(); 			
 
  			var css = {
  				height: height,
  				lineHeight: height,
- 				width: width
+ 				width: rowValueContainerWidth
  			};
 
  			var evenOdd = even ? "even" : "odd";
@@ -599,33 +655,33 @@
  		{
  			if(!threshold || !threshold.begin || !threshold.end) return;
 
-      var alpha = DEFAULT_THRESHOLD_ALPHA;
-      var color = getCssRgb(hexToRgb(getThresholdColor(threshold)), alpha);
-      var height = getThresholdHeight(threshold);
+			var alpha = DEFAULT_THRESHOLD_ALPHA;
+			var color = getCssRgb(hexToRgb(getThresholdColor(threshold)), alpha);
+			var height = getThresholdHeight(threshold);
  			var lineWidth = calculateHoursDifferenceInPx(threshold.begin, threshold.end);
  			var beforeWidth = calculateHoursDifferenceInPx(threshold.begin, limits.begin);
 
  			var css = {
  				width: lineWidth,
  				left: beforeWidth,
-        height: height
+       			height: height
  			};
 
-      var cssColor = {
-        backgroundColor: color
-      };
+			var cssColor = {
+				backgroundColor: color
+			};
 
  			var $threshold = $("<div>", { class: "sg_threshold", css: css});
  			$rowValueContainer.append($threshold);
 
-      var $thresholdBegin = $("<div>", { class: "sg_threshold_limit begin", css: cssColor });
-      $threshold.append($thresholdBegin);
+			var $thresholdBegin = $("<div>", { class: "sg_threshold_limit begin", css: cssColor });
+			$threshold.append($thresholdBegin);
 
-      var $thresholdLine = $("<div>", { class: "sg_threshold_line", css: cssColor });
-      $threshold.append($thresholdLine);
+			var $thresholdLine = $("<div>", { class: "sg_threshold_line", css: cssColor });
+			$threshold.append($thresholdLine);
 
-      var $thresholdEnd = $("<div>", { class: "sg_threshold_limit end", css: cssColor });
-      $threshold.append($thresholdEnd);
+			var $thresholdEnd = $("<div>", { class: "sg_threshold_limit end", css: cssColor });
+			$threshold.append($thresholdEnd);
  		}
 
  		function createMarker(marker, $rowValueContainer, row)
@@ -738,9 +794,7 @@
  				backgroundColor: markerColor
  			};
 
- 			var headerCss = showDateOnHeader ? "with_datetime_header" : "with_time_header";
-
- 			var $marker = $("<div>", { class: "sg_general_marker "+headerCss, css: css});
+ 			var $marker = $("<div>", { class: "sg_general_marker "+getHeaderCss(), css: css});
  			$valuesContainer.append($marker);
 
  			if(markerClick)
@@ -750,7 +804,32 @@
  			}
 
  			createMarkerTooltip(marker, $marker);
- 		}
+		}
+		 
+		function createGeneralHighlights()
+		{
+			if(!generalHighlights.length) return;
+			generalHighlights.forEach(createGeneralHighlight);
+		}
+
+		function createGeneralHighlight(highlight)
+		{
+			var highlightWidth = calculateHoursDifferenceInPx(highlight.begin, highlight.end);
+			var highlightHeight = ((parseInt(getRowHeight()) * data.length))+'px';
+
+			var highlightColor = getHighlightColor(highlight);
+			var beforeWidth = calculateHoursDifferenceInPx(highlight.begin, limits.begin);			
+
+			var css = {
+				width: highlightWidth,
+				height: highlightHeight,
+				left: beforeWidth,
+				backgroundColor: highlightColor
+			};
+
+			var $highlight = $("<div>", { class: "sg_general_highlight "+getHeaderCss(), css: css});
+			$valuesContainer.append($highlight);
+		}
 
  		function calculateHoursDifferenceInPx(date1, date2)
  		{
@@ -792,7 +871,7 @@
  				return style.height;
  			}
 
-      return  DEFAULT_ACTIVITY_HEIGHT;
+     		return  DEFAULT_ACTIVITY_HEIGHT;
  		}
 
  		function getActivityClick(activity)
@@ -801,27 +880,27 @@
  			return defaultOnActivityClick;
  		}
 
-    function getThresholdColor(threshold)
-    {
-      if(threshold.color) return threshold.color;
+		function getThresholdColor(threshold)
+		{
+		if(threshold.color) return threshold.color;
 
-      if(style && style.thresholdColor) {
-        return style.thresholdColor;
-      }
+		if(style && style.thresholdColor) {
+			return style.thresholdColor;
+		}
 
-      return DEFAULT_THRESHOLD_COLOR;
-    }
+		return DEFAULT_THRESHOLD_COLOR;
+		}
 
-    function getThresholdHeight(threshold)
-    {
-      if(threshold.height) return threshold.height;
+		function getThresholdHeight(threshold)
+		{
+		if(threshold.height) return threshold.height;
 
-      if(style && style.thresholdHeight) {
-        return style.thresholdHeight;
-      }
+		if(style && style.thresholdHeight) {
+			return style.thresholdHeight;
+		}
 
-      return  DEFAULT_THRESHOLD_HEIGHT;
-    }
+		return  DEFAULT_THRESHOLD_HEIGHT;
+		}
 
  		function getMarkerWidth(marker)
  		{
@@ -860,7 +939,16 @@
  		{
  			if(marker.onClick !== undefined) return marker.onClick;
  			return defaultOnGeneralMarkerClick;
- 		}
+		}
+		
+		function getHighlightColor(highlight)
+		{
+			if(highlight.color) {
+				return highlight.color;
+			} else {
+				return DEFAULT_HIGHLIGHT_COLOR;
+			}
+		}
 
  		function createTooltip($element, color, title, description, badge, subtitle, squareBadge)
  		{
@@ -919,7 +1007,7 @@
  			};
  		}
 
-    function appendTooltipContent($tooltip, title, descriptions, badge, subtitle,
+    	function appendTooltipContent($tooltip, title, descriptions, badge, subtitle,
 			badgeBGColor, badgeFontColor, squareBadge)
 		{
 			if(badge)
@@ -1085,6 +1173,23 @@
 
  			$clone.remove();
  			return result;
- 		}
+		}
+		 
+		function getHeaderCss()
+		{
+			var headerCss = "with_datetime_header";
+			
+			if(!showDateOnHeader && !showTimeOnHeader) {
+				headerCss = "without_header";
+			}
+			else if(!showDateOnHeader) {
+				headerCss = "with_time_header";
+			}
+			else if(!showTimeOnHeader) {
+				headerCss = "with_date_header";
+			}
+
+			return headerCss;
+		}
  	}
 }(jQuery));

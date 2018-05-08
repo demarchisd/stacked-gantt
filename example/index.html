@@ -27,8 +27,8 @@
       ret.setHours(split[0]);
       ret.setMinutes(split[1]);
 
-      if(daysToSum) ret.setDate(ret.getDate()+1);
-      return ret;
+      if(daysToSum) ret.setDate(ret.getDate()+daysToSum);
+        return ret;
     }
 
     var data = [
@@ -74,9 +74,15 @@
         }
     ];
 
+    var generalHighlights = [
+        { begin: createDate('08:00'), end: createDate('18:00'), color: "#5cea67" },
+        { begin: createDate('20:00'), end: createDate('02:15', 1) },
+    ];
+
     var options = {
       data: data,
       generalMarkers: generalMarkers,
+      generalHighlights: generalHighlights,      
       style: {
         months: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
         activityStyle: {
@@ -88,7 +94,7 @@
         dateHeaderFormat: function(date)
         {
           var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-          var months = ['January','February','Martch','April','May','June','July','August','September','October','November','December'];
+          var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
           return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() +"th - " + date.getFullYear();
         },

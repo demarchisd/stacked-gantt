@@ -15,7 +15,14 @@
     "grunt-contrib-qunit": "^2.0.0",
     "grunt-contrib-uglify": "^3.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-sass": "^2.0.0"
+    "grunt-sass": "^2.0.0",
+    "node-sass": "^4.9.0"
   },
-  "keywords": ["javascript", "jquery", "chart", "gantt", "gantt-chart"]
+  "keywords": [
+    "javascript",
+    "jquery",
+    "chart",
+    "gantt",
+    "gantt-chart"
+  ]
 }

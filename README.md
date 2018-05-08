@@ -30,10 +30,11 @@ $(document).ready(function() {
 
 ## Documentation
 ### Options
-The options are separated in four main properties:
+The options are separated in five main properties:
 
  - [`data`](#data): is an array that contains the data for each row of the chart;
- - [`generalMarkers`](#generalmarkers): is also an array, but contains data for the markers that crosses all rows in the chart (optional);
+ - [`generalMarkers`](#generalmarkers): is an array that the contains data for the markers that crosses all rows in the chart (optional);
+ - [`generalHighlights`](#generalhighlights): is an array that contains the data for highlighting periods, crossing all rows in the chart (optional);
  - [`style`](#style): is an object that defines some custom style properties (optional);
  - [`events`](#events): is an object that contains callbacks for some events (optional).
 
@@ -49,6 +50,9 @@ Each object of the `data` array represents a row in the chart and may have the f
 
 #### `generalMarkers`
 Each object of the `generalMarkers` array must follow the [`Marker`](#marker) documentation and represents a vertical line at the given time that will be placed across **all the rows of the chart**.
+
+#### `generalHighlights`
+Each object of the `generalHighlights` array must follow the [`Highlight`](#highlight) documentation and represents a highlight in the background at a given period that will be placed across **all the rows of the chart**.
 
 #### `style`
 
@@ -66,9 +70,13 @@ The `style` object may have the following properties for custom display settings
 | formatHour | `function` | Function that customizes the hour format used in the chart. Receives a `Date` param and must return a `string` | Returns the hour in the format `hh24:mi`. |
 | formatDate | `function` | Function that customizes the date format used in the chart. Receives a `Date` param and must return a `string`. | Returns the date in the format `dd/MMM`, where `MMM` is defined by the [`style.months`](#style) property. |
 | showDateOnHeader | `boolean` | Defines if the date should be displayed on the header. | `false` |
+| showTimeOnHeader | `boolean` | Defines if the time should be displayed on the header. | `true` |
 | dateHeaderFormat | `function` | Function that customizes the date format only for the header. Receives a `Date` param and must return a `string`. | Uses the [`style.formatDate`](#style) function. |
 | defaultBeginDate | `Date` | The default starting date for the chart build. If no activities, markers or thresholds are informed, this property will be used. | The current date at 1am |
 | defaultEndDate | `Date` | The default ending date for the chart build. If no activities, markers or thresholds are informed, this property will be used. | The current date at 23pm |
+| beginDate | `Date` | The starting date for the chart build. If any activity, marker or threshold is before the informed date, this property will be ignored. | `null` |
+| endDate | `Date` | The ending date for the chart build. If any activity, marker or threshold is after the informed date, this property will be ignored. | `null` |
+| autoAdjustLimits | `boolean` | If `true`, checks if the limit's begin and end minutes are less or equal than `10` and higher or equal than `50`. If so, decreases an hour from the begin and increases an hour in the end. | `true` |
 
 #### `events`
 The `events` object may have the following properties for custom callbacks:
@@ -116,6 +124,15 @@ A `Marker` object may have the following properties:
 | color | `string` | The marker's custom color in hex (e.g.: `'#e592d7'`). | optional |
 | onClick | `function` | Callback for the marker's click. If set, overrides the [`events.onMarkerClick`](#events) or [`events.onGeneralMarkerClick`](#events). | optional |
 
+#### `Highlight`
+A `Highlight` object may have the following properties:
+
+| name | type | description | optionality |
+| :- | :- | :- | :- |
+| begin | `Date` | The highlight's initial date/time | mandatory |
+| end | `Date` | The highlight's final date/time | mandatory |
+| color | `string` | The highlight's custom color in hex (e.g.: `'#e592d7'`). | optional |
+
 #### `ActivityStyle`
 An `ActivityStyle` object is composed by the activities `code`s that are wanted to have customized displaying (`color` and `height`) settings. For example, if you have the following activities in your data:
 
@@ -150,7 +167,10 @@ When you create a stackedGantt, you can store its instance in a variable and cal
 - [`update()`](#update);
 - [`zoomIn()`](#zoomin);
 - [`zoomOut()`](#zoomout);
-- [`destroy()`](#destroy).
+- [`destroy()`](#destroy);
+- [`getData()`](#getdata).
+- [`getGeneralMarkers()`](#getgeneralmarkers).
+- [`getGeneralHighlights()`](#getgeneralhighlights).
 
 For example:
 
@@ -163,12 +183,13 @@ $(document).ready(function() {
 ```
 
 #### `update()`
-The update function can be used to update the chart's `data` and `generalMarkers` without changing the custom `style` and `events` properties that were defined at instantiation time. The following parameters may be supplied:
+The update function can be used to update the chart's `data`, `generalMarkers` and `generalHighlights` without changing the custom `style` and `events` properties that were defined at instantiation time. The following parameters may be supplied:
 
 | name | type | description | optionality |
 | :- | :- | :- | :- |
 | data | [`data`](#data) | Contains the data for each row of the chart. | mandatory |
 | generalMarkers | [`generalMarkers`](#generalmarkers) |  Contains data for the markers that crosses all rows in the chart. | optional |
+| generalHighlights | [`generalHighlights`](#generalhighlights) |  Contains data for the highlights in the background that crosses all rows in the chart. | optional |
 
 #### `zoomIn()`
 The `zoomIn` function increases by 10% the hour's width in the chart. No parameters are necessary.
@@ -178,6 +199,15 @@ The `zoomOut` function decreases by 10% the hour's width in the chart. No parame
 
 #### `destroy()`
 The `destroy` function removes all graphical elements from the screen and also destroys the stackedGantt instance. No parameters are necessary.
+
+#### `getData()`
+The `getData` function returns the [`data`](#data) array used to build the chart.
+
+#### `getGeneralMarkers()`
+The `getGeneralMarkers` function returns the [`generalMarkers`](#generalmarkers) array used to build the General Markers.
+
+#### `getGeneralHighlights()`
+The `getGeneralHighlights` function returns the [`generalHighlights`](#generalhighlights) array used to build the General Highlights.
 
 ## Examples
 [Click here to see the working example code.](example/index.html)

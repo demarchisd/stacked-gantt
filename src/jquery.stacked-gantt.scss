@@ -33,8 +33,16 @@ $threshold-thickness: 2px;
   margin-top: $header-height;
 }
 
+.sg_desc_container.with_date_header {
+  margin-top: $header-height;
+}
+
 .sg_desc_container.with_datetime_header {
   margin-top: $header-height-with-date;
+}
+
+.sg_desc_container.without_header {
+  margin-top: 0;
 }
 
 .sg_row_desc_container:first-child {
@@ -161,6 +169,7 @@ $threshold-thickness: 2px;
   top: 50%;
   transform: translateY(-50%);
   min-width: 1px;
+  z-index: 99;
 
   background-color: rgba(0,150,0,0.3);
 }
@@ -190,6 +199,37 @@ $threshold-thickness: 2px;
 
 .sg_general_marker.with_datetime_header {
   top: $header-height-with-date;
+}
+
+.sg_general_marker.with_date_header {
+  top: $header-height;
+}
+
+.sg_general_marker.without_header {
+  top: 0;
+}
+
+.sg_general_highlight {
+  box-sizing: content-box;
+  opacity: 0.4;
+  position: absolute;
+  z-index: 98;
+}
+
+.sg_general_highlight.with_time_header {
+  top: $header-height;
+}
+
+.sg_general_highlight.with_datetime_header {
+  top: $header-height-with-date;
+}
+
+.sg_general_highlight.with_date_header {
+  top: $header-height;
+}
+
+.sg_general_highlight.without_header {
+  top: 0;
 }
 
 .sg_marker.hover, .sg_general_marker.hover {
