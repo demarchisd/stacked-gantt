@@ -1,4 +1,4 @@
-/*! Stacked Gantt - v0.2.0 - 2018-05-08
+/*! Stacked Gantt - v0.2.1 - 2018-05-10
 * https://github.com/demarchisd/stacked-gantt
 * Copyright (c) 2018 Bruno Kewitz Demarchi; Licensed MIT */
 (function($)
@@ -839,7 +839,8 @@
 
  		function calculateHoursDifferenceInPx(date1, date2)
  		{
- 			var diff = (Math.abs(date1 - date2) / 3600000);
+			var timezoneOffsetDiff = Math.abs(date1.getTimezoneOffset() - date2.getTimezoneOffset()) * 60 * 1000;			
+ 			var diff = (Math.abs(date1 - date2) - timezoneOffsetDiff) / 3600000;
  			var width = diff*hourWidth;
 
  			return width+'px';

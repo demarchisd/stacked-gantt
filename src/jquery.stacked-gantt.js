@@ -843,7 +843,8 @@
 
  		function calculateHoursDifferenceInPx(date1, date2)
  		{
- 			var diff = (Math.abs(date1 - date2) / 3600000);
+			var timezoneOffsetDiff = Math.abs(date1.getTimezoneOffset() - date2.getTimezoneOffset()) * 60 * 1000;			
+ 			var diff = (Math.abs(date1 - date2) - timezoneOffsetDiff) / 3600000;
  			var width = diff*hourWidth;
 
  			return width+'px';
