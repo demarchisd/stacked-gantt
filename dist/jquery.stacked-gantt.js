@@ -420,10 +420,10 @@
  					return currentBegin < lowestBegin ? currentBegin : lowestBegin;
  				}));
 			
-			if(autoAdjustLimits && (begin.getMinutes() <= 10 || begin.getMinutes() >= 50)) 
+			if(!beginDate && autoAdjustLimits && (begin.getMinutes() <= 10 || begin.getMinutes() >= 50)) 
 				begin.setHours(begin.getHours()-1);
 
-			begin.setMinutes(0);
+			begin.setMinutes(0);			
 
  			var end = new Date(rowsLimits
  				.map(function(rowLimit) {
@@ -439,7 +439,7 @@
  					return currentEnd > highestEnd ? currentEnd : highestEnd;
  				}));
 
-			if(autoAdjustLimits && (end.getMinutes() <= 10 || end.getMinutes() >= 50)) 
+			if(!endDate && autoAdjustLimits && (end.getMinutes() <= 10 || end.getMinutes() >= 50)) 
 				end.setHours(end.getHours()+1);
 				 
 			end.setMinutes(0);
