@@ -61,6 +61,7 @@ The `style` object may have the following properties for custom display settings
 | name | type | description | default |
 | :- | :- | :- | :- |
 | activityStyle| [`ActivityStyle`](#activitystyle) | Customizes the acvitities' bars styles for a specific [`Activity`](#activity) `code` value. | For every [`Activity`](#activity) `code`, the default style is `{ color: "#7fad7f", height: "20px" }`. |
+| rowHeight | `string` | The rows' default height in px. | `'50px'` |
 | thresholdColor | `string` | The thresholds' default color in hex. | `'#000000'` |
 | thresholdHeight | `string` | The thresholds' default height in px. | `'20px'` |
 | noDataText | `string` | Text to show when there's no data to display. | `'No data to display.'` |
