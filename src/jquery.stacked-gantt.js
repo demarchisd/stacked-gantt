@@ -1007,7 +1007,7 @@
 				$element.mouseover(keepTooltip($tooltip));
 				$element.mouseout(initTooltipRemoval($element, $tooltip, handleMouseOver));
 
-				$('body').append($tooltip);
+				getBody().append($tooltip);
 			};
 
 			$element.mouseover(handleMouseOver);
@@ -1198,7 +1198,7 @@
 			.show()
 			.css('visibility','hidden');
 
-			$('body').append($clone);
+			getBody().append($clone);
 
 			var result = {
 				width: $clone.width(),
@@ -1224,6 +1224,11 @@
 		   }
 
 		   return headerCss;
+	   }
+
+	   function getBody() {
+			var body = $container.parentsUntil("body").last().parent();
+			return $(body);
 	   }
 	}
 }(jQuery));

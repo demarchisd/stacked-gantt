@@ -2,7 +2,7 @@
   "name": "stacked-gantt",
   "title": "Stacked Gantt",
   "description": "JQuery Gantt-like chart with stacked activities/tasks, providing more concise information.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "homepage": "https://github.com/demarchisd/stacked-gantt",
   "author": {
     "name": "Bruno Kewitz Demarchi",

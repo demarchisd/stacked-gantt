@@ -1,4 +1,4 @@
-/*! Stacked Gantt - v0.2.2 - 2018-05-14
+/*! Stacked Gantt - v0.2.3 - 2018-05-17
 * https://github.com/demarchisd/stacked-gantt
 * Copyright (c) 2018 Bruno Kewitz Demarchi; Licensed MIT */
 (function($)
@@ -1003,7 +1003,7 @@
 				$element.mouseover(keepTooltip($tooltip));
 				$element.mouseout(initTooltipRemoval($element, $tooltip, handleMouseOver));
 
-				$('body').append($tooltip);
+				getBody().append($tooltip);
 			};
 
 			$element.mouseover(handleMouseOver);
@@ -1194,7 +1194,7 @@
 			.show()
 			.css('visibility','hidden');
 
-			$('body').append($clone);
+			getBody().append($clone);
 
 			var result = {
 				width: $clone.width(),
@@ -1220,6 +1220,11 @@
 		   }
 
 		   return headerCss;
+	   }
+
+	   function getBody() {
+			var body = $container.parentsUntil("body").last().parent();
+			return $(body);
 	   }
 	}
 }(jQuery));
