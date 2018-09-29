@@ -4,6 +4,7 @@
  *
  * Copyright (c) 2018 Bruno Kewitz Demarchi
  * Licensed under the MIT license.
+ * added vertical scrollbar Uwe Simon
  */
 (function($)
 {
