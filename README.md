@@ -2,9 +2,9 @@
 
 JQuery Gantt-like chart with stacked activities/tasks, providing conciser information.
 
-![Stacked-Gantt Demo Image](https://github.com/demarchisd/stacked-gantt/blob/master/demo.png)
+![Stacked-Gantt Demo Image](https://github.com/uwesimon/stacked-gantt/blob/master/demo.png)
 
-[Try live demo here](https://demarchisd.github.io/stacked-gantt/example/)
+[Try live demo here](https://github.io/uwesimon/stacked-gantt/example/)
 
 ## Getting Started
 Download the [js][JS] and the [css][CSS] files.
