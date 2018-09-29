@@ -21,6 +21,11 @@ $threshold-thickness: 2px;
   border-radius: 5px;
 }
 
+.sg_header_container {
+  overflow-x: hidden;
+}
+
+
 .sg_desc_container {
     display: block;
     float:left;
@@ -66,7 +71,7 @@ $threshold-thickness: 2px;
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    padding-bottom: 4px;
+    padding-bottom: 0px;
 }
 
 .sg_row_desc_container.odd, .sg_row_val_container.odd {
@@ -245,6 +250,7 @@ $threshold-thickness: 2px;
 .sg_tooltip {
   z-index: 99999;
   width: 300px;
+  height: 110px;
   padding: 15px;
 
   border: 2px solid;
