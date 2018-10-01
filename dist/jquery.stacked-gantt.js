@@ -778,7 +778,7 @@
 			var title = marker.description;
 			var subtitle = rowDescription;
 			var description = getMarkerTimeDescription(marker);
-			var badge = title[0];
+			var badge = title?title[0]:'?';
 			var squareBadge = true;
 
 			createTooltip($marker, color, title, description, badge, subtitle, squareBadge);
@@ -821,7 +821,7 @@
 			var title = activity.description;
 			var subtitle = rowDescription;
 			var description = getActivityTimeDescription(activity);
-			var badge = title[0];
+			var badge = title?title[0]:'?';
 
 			createTooltip($activity, color, title, description, badge, subtitle);
 		}
