@@ -208,6 +208,7 @@
             showDateOnHeader: true,
             showTimeOnHeader: true,
             hourWidth:        50,
+            rowHeight:        '30px',
             formatDate:       function(date){ return ('0' + (date.getMonth()+1)).substr(-2) + '-' + ('0' + (date.getDate())).substr(-2); },
             dateHeaderFormat: function(date){ return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).substr(-2) + '-' + ('0' + date.getDate()).substr(-2);},
             descriptionContainerWidth: '150px'
@@ -228,6 +229,6 @@
   	<div id="timeline" style="width: 100%"></div>
 
     <h1>Schedules Example</h1>
-    <div id="jobschedules" style="height: 400px; width: 50%"></div>
+    <div id="jobschedules" style="height: 300px; width: 50%"></div>
   </body>
 </html>

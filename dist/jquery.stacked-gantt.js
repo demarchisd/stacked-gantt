@@ -1,4 +1,4 @@
-/*! Stacked Gantt - v0.2.3 - 2018-09-29
+/*! Stacked Gantt - v0.2.3 - 2018-10-01
 * https://github.com/demarchisd/stacked-gantt
 * Copyright (c) 2018 Bruno Kewitz Demarchi; Licensed MIT */
 (function($)
@@ -77,12 +77,12 @@
 		stackedGantt.build();
 
 		$this.update = function(data, generalMarkers, generalHighlights) { stackedGantt.update(data, generalMarkers, generalHighlights); };
-	   $this.zoomIn = function() { stackedGantt.zoomIn(); };
-	   $this.zoomOut = function() { stackedGantt.zoomOut(); };
-	   $this.destroy = function() { stackedGantt.destroy(); };
-	   $this.getData = function() { return stackedGantt.getData(); };
-	   $this.getGeneralMarkers = function() { return stackedGantt.getGeneralMarkers(); };
-	   $this.getGeneralHighlights = function() { return stackedGantt.getGeneralHighlights(); };
+	  $this.zoomIn = function() { stackedGantt.zoomIn(); };
+	  $this.zoomOut = function() { stackedGantt.zoomOut(); };
+	  $this.destroy = function() { stackedGantt.destroy(); };
+	  $this.getData = function() { return stackedGantt.getData(); };
+	  $this.getGeneralMarkers = function() { return stackedGantt.getGeneralMarkers(); };
+	  $this.getGeneralHighlights = function() { return stackedGantt.getGeneralHighlights(); };
 
 		return $this;
 	};
@@ -374,8 +374,12 @@
 
 			$valuesContainer = $("<div>", {
 				  class: "sg_val_container",
-		      css:   {height: clientHeight?clientHeight:undefined}
+		      css:   {"grid-template-rows": 'repeat(auto-fill, ' + getRowHeight() + ')',
+					        display:          'grid',
+						      height:            clientHeight?clientHeight:undefined}
 			});
+
+			$valuesContainer.css('grid-template-rows', 'repeat(autofill, ' + getRowHeight() + ')');
 
 			$container.append($valuesContainer);
 			addHorizontalScroll($valuesContainer);
@@ -1159,16 +1163,19 @@
 
 		function defineContainerDisplayType()
 		{
+			/*
 			setContainersDisplay('inline-block', 'inline-block');
 
 			var contentSpace = $container.outerWidth();
 			var totalSpace = $this.width();
 
 			if(contentSpace >= totalSpace) {
-				setContainersDisplay('block', 'grid');
+ 				setContainersDisplay('block', 'grid');
 			}
+			*/
 		}
 
+/*
 		function setContainersDisplay(container, valuesContainer)
 		{
 			$container.css('display', '');
@@ -1176,7 +1183,7 @@
 			$container.css('display', container);
 			$valuesContainer.css('display', valuesContainer);
 		}
-
+*/
 		function getDateDescription(date, showDate)
 		{
 			var ret = '';
