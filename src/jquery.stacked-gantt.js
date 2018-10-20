@@ -1068,7 +1068,7 @@
         	    $element.mouseover(keepTooltip($tooltip));
         	    $element.mouseout(initTooltipRemoval($element, $tooltip, handleMouseOver));
 
-console.dir($tooltip);
+//                  console.dir($tooltip);
         	    getBody().append($tooltip);
         	};
 
@@ -1082,7 +1082,7 @@ console.dir($tooltip);
         	var top = ev.pageY + 5;
 
         	var tooltipWidth = getDimensions($tooltip).width;
-console.log('Width: ' + tooltipWidth);
+//              console.log('Width: ' + tooltipWidth);
 
         	var tooltipRightestPixelPosition = left + tooltipWidth;
         	var windowRightestPixelVisiblePosition = $w.scrollLeft() + $w.width();
