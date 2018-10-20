@@ -78,6 +78,7 @@ The `style` object may have the following properties for custom display settings
 | beginDate | `Date` | The starting date for the chart build. If any activity, marker or threshold is before the informed date, this property will be ignored. | `null` |
 | endDate | `Date` | The ending date for the chart build. If any activity, marker or threshold is after the informed date, this property will be ignored. | `null` |
 | autoAdjustLimits | `boolean` | If `true`, checks if the limit's begin and end minutes are less or equal than `10` and higher or equal than `50`. If so, decreases an hour from the begin and increases an hour in the end. | `true` |
+| tootipTemplate | string | HTML-template for the tooltip. It supports some variables ${variable} which are replaced by their value at runtime. Variables are duration, description, badge, title, subtitle |
 
 #### `events`
 The `events` object may have the following properties for custom callbacks:
@@ -154,7 +155,7 @@ var options = {
   style: {
     activityStyle: {
       'TYPE_1': { color: "#8e87ea", height: "30px" },
-      'TYPE_2': { color: "#b3b94e" }	
+      'TYPE_2': { color: "#b3b94e" }
     }
   }
 }
