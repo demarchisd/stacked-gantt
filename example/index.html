@@ -210,7 +210,7 @@
             },
             showDateOnHeader: true,
             showTimeOnHeader: true,
-            tooltipTemplate:  '<div style="width:300px; padding:5px; z-index:9999; border-style:solid; border-width:1px; background-color:white;"><span class="sg_tooltip_title">${title}</span><div class="sg_tooltip_description_wrapper"><div class="sg_tooltip_description">${description} (${duration})</div></div></div>',
+            tooltipTemplate:  '<div style="font-size: 15px; height:40px; width:300px; padding:5px; z-index:9999; border-style:solid; border-width:1px; color:white; background-color:black;"><span><b>${title}</b></span><div><div>${description} (${duration})</div></div></div>',
             hourWidth:        50,
             rowHeight:        '30px',
             formatDate:       function(date){ return ('0' + (date.getMonth()+1)).substr(-2) + '-' + ('0' + (date.getDate())).substr(-2); },

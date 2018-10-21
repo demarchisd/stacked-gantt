@@ -838,14 +838,16 @@
 
         function getActivityDuration(activity)
         {
-          
-            return((activity.end - activity.begin)/1000/60 + 'min');
+            var mins = Math.round((activity.end - activity.begin)/1000/60);
+            var hours = Math.floor(mins/60); 
+            var days = Math.floor(hours/24); 
+            return( days + ':' + ('0' + (hours % 24)).substr(-2) + ':' + ('0' + (mins % 60)).substr(-2));
         }
 
         function getActivityTimeDescription(activity)
         {
         	return getDateDescription(activity.begin, true) +
-        	' — ' +
+        	' - ' +
         	getDateDescription(activity.end, !isSameDay(activity.begin, activity.end));
         }
 
