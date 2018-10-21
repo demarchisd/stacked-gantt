@@ -2,9 +2,9 @@
 
 JQuery Gantt-like chart with stacked activities/tasks, providing conciser information.
 
-![Stacked-Gantt Demo Image](https://github.com/demarchisd/stacked-gantt/blob/master/demo.png)
+![Stacked-Gantt Demo Image](https://github.com/uwesimon/stacked-gantt/blob/master/demo.png)
 
-[Try live demo here](https://demarchisd.github.io/stacked-gantt/example/)
+[Try live demo here](https://github.io/uwesimon/stacked-gantt/example/)
 
 ## Getting Started
 Download the [js][JS] and the [css][CSS] files.
@@ -78,7 +78,17 @@ The `style` object may have the following properties for custom display settings
 | beginDate | `Date` | The starting date for the chart build. If any activity, marker or threshold is before the informed date, this property will be ignored. | `null` |
 | endDate | `Date` | The ending date for the chart build. If any activity, marker or threshold is after the informed date, this property will be ignored. | `null` |
 | autoAdjustLimits | `boolean` | If `true`, checks if the limit's begin and end minutes are less or equal than `10` and higher or equal than `50`. If so, decreases an hour from the begin and increases an hour in the end. | `true` |
-| tootipTemplate | string | HTML-template for the tooltip. It supports some variables ${variable} which are replaced by their value at runtime. Variables are duration, description, badge, title, subtitle |
+| tootipTemplate | `string` | HTML-template for the acivity/marker tooltips. It supports some variables **${variable}** which are replaced by their value at runtime. | `null` |
+
+Supported variables in tooltipTemplate
+
+| Variable    | Description |
+| --------    | ----------- |
+| duration    | The duration of an activity in minutes |
+| description | The interval of the acctivity/time of the marker |
+| title       | Tne description of marker/activity |
+| subtitle    | The description of the activitylist |
+| badge       | First character of the marker/activity description |
 
 #### `events`
 The `events` object may have the following properties for custom callbacks:
