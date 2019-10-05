@@ -1,6 +1,6 @@
-/*! Stacked Gantt - v0.2.3 - 2018-10-21
+/*! Stacked Gantt - v0.2.3 - 2019-08-06
 * https://github.com/demarchisd/stacked-gantt
-* Copyright (c) 2018 Bruno Kewitz Demarchi; Licensed MIT */
+* Copyright (c) 2019 Bruno Kewitz Demarchi; Licensed MIT */
 (function($)
 {
      'use strict';
