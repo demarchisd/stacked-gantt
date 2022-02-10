@@ -16,7 +16,7 @@
     "grunt-contrib-uglify": "^3.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-sass": "^2.0.0",
-    "node-sass": "^4.9.0"
+    "node-sass": "^7.0.0"
   },
   "keywords": [
     "javascript",
