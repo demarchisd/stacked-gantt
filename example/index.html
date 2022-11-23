@@ -14,10 +14,13 @@
       h1 {
         display: inline-block;
       }
+      a {
+        text-decoration: none;
+      }
     </style>
     <link rel="stylesheet" type="text/css" href="../dist/jquery.stacked-gantt.css">
   	<script src="../libs/jquery/jquery.js"></script>
-  	<script src="../dist/jquery.stacked-gantt.min.js"></script>
+  	<script src="../dist/jquery.stacked-gantt.js"></script>
   	<script>
 
     function createDate(time, daysToSum)
@@ -119,73 +122,73 @@
       {
         description: 'job2',
         activities: [
-          { code: 'OK',      begin: createDate('09:10'),    end: createDate('09:40'),    description: 'job1.sh 09:10 full' },
-          { code: 'WARNING', begin: createDate('15:10'),    end: createDate('16:00'),    description: 'job1.sh 15:10 incr' },
-          { code: 'OK',      begin: createDate('21:10'),    end: createDate('21:35'),    description: 'job1.sh 21:10 incr' },
+          { code: 'OK',      begin: createDate('09:10'),    end: createDate('09:40'),    description: 'job2.sh 09:10 full' },
+          { code: 'WARNING', begin: createDate('15:10'),    end: createDate('16:00'),    description: 'job2.sh 15:10 incr' },
+          { code: 'OK',      begin: createDate('21:10'),    end: createDate('21:35'),    description: 'job2.sh 21:10 incr' },
         ]
       },
       {
         description: 'job3',
         activities: [
-          { code: 'OK',      begin: createDate('09:20'),    end: createDate('09:50'),    description: 'job1.sh 09:20 full' },
-          { code: 'WARNING', begin: createDate('15:20'),    end: createDate('16:10'),    description: 'job1.sh 15:20 incr' },
-          { code: 'OK',      begin: createDate('21:20'),    end: createDate('21:45'),    description: 'job1.sh 21:20 incr' },
+          { code: 'OK',      begin: createDate('09:20'),    end: createDate('09:50'),    description: 'job3.sh 09:20 full' },
+          { code: 'WARNING', begin: createDate('15:20'),    end: createDate('16:10'),    description: 'job3.sh 15:20 incr' },
+          { code: 'OK',      begin: createDate('21:20'),    end: createDate('21:45'),    description: 'job3.sh 21:20 incr' },
         ]
       },
       {
         description: 'job4',
         activities: [
-          { code: 'OK',      begin: createDate('09:30'),    end: createDate('10:00'),    description: 'job1.sh 09:30 full' },
-          { code: 'WARNING', begin: createDate('15:30'),    end: createDate('16:20'),    description: 'job1.sh 15:30 incr' },
-          { code: 'OK',      begin: createDate('21:30'),    end: createDate('21:55'),    description: 'job1.sh 21:30 incr' },
+          { code: 'OK',      begin: createDate('09:30'),    end: createDate('10:00'),    description: 'job4.sh 09:30 full' },
+          { code: 'WARNING', begin: createDate('15:30'),    end: createDate('16:20'),    description: 'job4.sh 15:30 incr' },
+          { code: 'OK',      begin: createDate('21:30'),    end: createDate('21:55'),    description: 'job4.sh 21:30 incr' },
         ]
       },
       {
         description: 'job5',
         activities: [
-          { code: 'OK',      begin: createDate('09:40'),    end: createDate('10:40'),    description: 'job1.sh 09:40 full' },
-          { code: 'WARNING', begin: createDate('15:40'),    end: createDate('16:30'),    description: 'job1.sh 15:40 incr' },
-          { code: 'OK',      begin: createDate('21:40'),    end: createDate('22:05'),    description: 'job1.sh 21:40 incr' },
+          { code: 'OK',      begin: createDate('09:40'),    end: createDate('10:40'),    description: 'job5.sh 09:40 full' },
+          { code: 'WARNING', begin: createDate('15:40'),    end: createDate('16:30'),    description: 'job5.sh 15:40 incr' },
+          { code: 'OK',      begin: createDate('21:40'),    end: createDate('22:05'),    description: 'job5.sh 21:40 incr' },
         ]
       },
       {
         description: 'job6',
         activities: [
-          { code: 'OK',      begin: createDate('09:50'),    end: createDate('10:50'),    description: 'job1.sh 09:50 full' },
-          { code: 'WARNING', begin: createDate('15:50'),    end: createDate('16:40'),    description: 'job1.sh 15:50 incr' },
-          { code: 'OK',      begin: createDate('21:50'),    end: createDate('22:15'),    description: 'job1.sh 21:50 incr' },
+          { code: 'OK',      begin: createDate('09:50'),    end: createDate('10:50'),    description: 'job6.sh 09:50 full' },
+          { code: 'WARNING', begin: createDate('15:50'),    end: createDate('16:40'),    description: 'job6.sh 15:50 incr' },
+          { code: 'OK',      begin: createDate('21:50'),    end: createDate('22:15'),    description: 'job6.sh 21:50 incr' },
         ]
       },
       {
         description: 'job7',
         activities: [
-          { code: 'OK',      begin: createDate('09:00'),    end: createDate('09:30'),    description: 'job1.sh 09:00 full' },
-          { code: 'WARNING', begin: createDate('15:00'),    end: createDate('15:50'),    description: 'job1.sh 15:00 incr' },
-          { code: 'OK',      begin: createDate('21:00'),    end: createDate('21:25'),    description: 'job1.sh 21:00 incr' },
+          { code: 'OK',      begin: createDate('09:00'),    end: createDate('09:30'),    description: 'job7.sh 09:00 full' },
+          { code: 'WARNING', begin: createDate('15:00'),    end: createDate('15:50'),    description: 'job7.sh 15:00 incr' },
+          { code: 'OK',      begin: createDate('21:00'),    end: createDate('21:25'),    description: 'job7.sh 21:00 incr' },
         ]
       },
       {
         description: 'job8',
         activities: [
-          { code: 'OK',      begin: createDate('09:10'),    end: createDate('09:40'),    description: 'job1.sh 09:10 full' },
-          { code: 'WARNING', begin: createDate('15:10'),    end: createDate('16:00'),    description: 'job1.sh 15:10 incr' },
-          { code: 'OK',      begin: createDate('21:10'),    end: createDate('21:35'),    description: 'job1.sh 21:10 incr' },
+          { code: 'OK',      begin: createDate('09:10'),    end: createDate('09:40'),    description: 'job8.sh 09:10 full' },
+          { code: 'WARNING', begin: createDate('15:10'),    end: createDate('16:00'),    description: 'job8.sh 15:10 incr' },
+          { code: 'OK',      begin: createDate('21:10'),    end: createDate('21:35'),    description: 'job8.sh 21:10 incr' },
         ]
       },
       {
         description: 'job9',
         activities: [
-          { code: 'OK',      begin: createDate('09:20'),    end: createDate('09:50'),    description: 'job1.sh 09:20 full' },
-          { code: 'WARNING', begin: createDate('15:20'),    end: createDate('16:10'),    description: 'job1.sh 15:20 incr' },
-          { code: 'OK',      begin: createDate('21:20'),    end: createDate('21:45'),    description: 'job1.sh 21:20 incr' },
+          { code: 'OK',      begin: createDate('09:20'),    end: createDate('09:50'),    description: 'job9.sh 09:20 full' },
+          { code: 'WARNING', begin: createDate('15:20'),    end: createDate('16:10'),    description: 'job9.sh 15:20 incr' },
+          { code: 'OK',      begin: createDate('21:20'),    end: createDate('21:45'),    description: 'job9.sh 21:20 incr' },
         ]
       },
       {
         description: 'job10',
         activities: [
-          { code: 'OK',      begin: createDate('09:30'),    end: createDate('10:00'),    description: 'job1.sh 09:30 full' },
-          { code: 'WARNING', begin: createDate('15:30'),    end: createDate('16:20'),    description: 'job1.sh 15:30 incr' },
-          { code: 'OK',      begin: createDate('21:30'),    end: createDate('21:55'),    description: 'job1.sh 21:30 incr' },
+          { code: 'OK',      begin: createDate('09:30'),    end: createDate('10:00'),    description: 'job10.sh 09:30 full' },
+          { code: 'WARNING', begin: createDate('15:30'),    end: createDate('16:20'),    description: 'job10.sh 15:30 incr' },
+          { code: 'OK',      begin: createDate('21:30'),    end: createDate('21:55'),    description: 'job10.sh 21:30 incr' },
         ]
       },
     ];
@@ -207,18 +210,29 @@
             },
             showDateOnHeader: true,
             showTimeOnHeader: true,
+            tooltipTemplate:  '<div style="font-size: 15px; height:40px; width:300px; padding:5px; z-index:9999; border-style:solid; border-width:1px; color:white; background-color:black;"><span><b>${title}</b></span><div><div>${description} (${duration})</div></div></div>',
             hourWidth:        50,
+            rowHeight:        '30px',
             formatDate:       function(date){ return ('0' + (date.getMonth()+1)).substr(-2) + '-' + ('0' + (date.getDate())).substr(-2); },
             dateHeaderFormat: function(date){ return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).substr(-2) + '-' + ('0' + date.getDate()).substr(-2);},
             descriptionContainerWidth: '150px'
           }
         };
 
-;
+        $(document).ready(function() {
+          var $timeline = $('#timeline').stackedGantt(timeoptions);
+          var $jobschedules = $('#jobschedules').stackedGantt(joboptions);
 
-  	$(document).ready(function() {
-      var $timeline = $('#timeline').stackedGantt(timeoptions);
-      var jobschedules = $('#jobschedules').stackedGantt(joboptions);
+          resize = function(deltaX, deltaY){
+            var $jobdiv = $('#jobschedules');
+            var width  = 10 * deltaX + $jobdiv.width();
+            var height = 10 * deltaY  + $jobdiv.height();
+            $jobdiv.width(width);
+            $jobdiv.height(height);
+
+            $jobschedules.update($jobschedules.getData(), $jobschedules.getGeneralMarkers(), $jobschedules.getGeneralHighlights());
+       }
+
   	});
 
   	</script>
@@ -227,7 +241,12 @@
 
   	<div id="timeline" style="width: 100%"></div>
 
-    <h1>Schedules Example</h1>
-    <div id="jobschedules" style="height: 400px; width: 50%"></div>
+    <h1>Schedules Example with customized tooltip</h1>
+    <table>
+    <tr><td/><td/><td><a href="#" onclick="resize( 0,-1 )">^</td></tr></tr>
+    <tr><td>Resize</td> <td><a href="#" onclick="resize(-1, 0)">&lt;</a></td><td></td><td><a href="#" onclick="resize( 1, 0)">&gt;</td></tr>
+    <tr><td/><td/><td><a href="#" onclick="resize( 0, 1)">v</td></tr>
+  </table>
+    <div id="jobschedules" style="height: 300px; width: 50%"></div>
   </body>
 </html>
